@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExpertSoft Management System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --blue-primary: #3b82f6;
+            --blue-secondary: #1d4ed8;
+            --blue-accent: #60a5fa;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --border-color: #475569;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            min-height: 100vh;
+        }
+
+        .container-fluid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Navigation */
+        .navbar-custom {
+            background: linear-gradient(135deg, var(--blue-primary), var(--blue-secondary));
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            padding: 0.75rem 1.5rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1rem;
+        }
+
+        .card-header {
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-color);
+            border-radius: 10px 10px 0 0 !important;
+            padding: 0.75rem 1rem;
+        }
+
+        .card-body {
+            padding: 1rem;
+        }
+
+        /* Stats Cards */
+        .stats-card {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border-left: 3px solid var(--blue-accent);
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .stats-card h6 {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-card h4 {
+            color: var(--blue-accent);
+            margin: 0;
+        }
+
+        /* Forms */
+        .form-control, .form-select {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 6px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background: var(--bg-tertiary);
+            border-color: var(--blue-accent);
+            color: var(--text-primary);
+            box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+        }
+
+        /* Buttons */
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--blue-primary), var(--blue-secondary));
+            border: none;
+            color: white;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary-custom:hover {
+            background: linear-gradient(135deg, var(--blue-secondary), var(--blue-primary));
+            transform: translateY(-1px);
+        }
+
+        .btn-outline-secondary {
+            border-color: var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .btn-outline-secondary:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--blue-accent);
+            color: var(--text-primary);
+        }
+
+        /* Tables */
+        .table {
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            font-size: 0.85rem;
+        }
+
+        .table thead th {
+            background: var(--bg-tertiary);
+            border-color: var(--border-color);
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            padding: 0.5rem;
+        }
+
+        .table tbody td {
+            border-color: var(--border-color);
+            padding: 0.5rem;
+            vertical-align: middle;
+        }
+
+        .table-hover tbody tr:hover {
+            background: var(--bg-tertiary);
+        }
+
+        /* Tabs */
+        .nav-tabs {
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .nav-tabs .nav-link {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            margin-right: 0.25rem;
+        }
+
+        .nav-tabs .nav-link.active {
+            background: var(--blue-primary);
+            color: white;
+            border-radius: 6px 6px 0 0;
+        }
+
+        /* Status badges */
+        .status-badge {
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .status-active { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+        .status-inactive { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+        .status-pending { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+        .status-paid { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+
+        /* Modal */
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--blue-primary), var(--blue-secondary));
+            border-bottom: 1px solid var(--border-color);
+            border-radius: 10px 10px 0 0;
+        }
+
+        /* Alerts */
+        .alert {
+            border-radius: 6px;
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+
+        /* Progress */
+        .progress {
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+        }
+
+        .progress-bar {
+            background: var(--blue-accent);
+        }
+
+        /* Utilities */
+        .text-primary { color: var(--blue-accent) !important; }
+        .text-success { color: var(--success) !important; }
+        .text-warning { color: var(--warning) !important; }
+        .text-info { color: var(--blue-accent) !important; }
+
+        .spinner-border {
+            color: var(--blue-accent);
+        }
+
+        /* Compact spacing */
+        .mb-2 { margin-bottom: 0.5rem !important; }
+        .mb-3 { margin-bottom: 1rem !important; }
+        .p-2 { padding: 0.5rem !important; }
+
+        /* File upload area */
+        .upload-area {
+            background: var(--bg-tertiary);
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: var(--blue-accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Navigation -->
+        <nav class="navbar navbar-dark navbar-custom">
+            <div class="container-fluid p-0">
+                <span class="navbar-brand mb-0 h1">
+                    <i class="fas fa-chart-line me-2"></i>ExpertSoft System
+                </span>
+                <span class="text-light">
+                    <i class="fas fa-user-circle me-1"></i>Admin
+                </span>
+            </div>
+        </nav>
+
+        <!-- Alert Container -->
+        <div id="alertContainer"></div>
+
+        <!-- Stats Row -->
+        <div class="row mb-3" id="statsContainer">
+            <div class="col-lg-3 col-md-6 mb-2">
+                <div class="card stats-card">
+                    <h6>Customers</h6>
+                    <h4 id="totalCustomers">-</h4>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-2">
+                <div class="card stats-card">
+                    <h6>Revenue</h6>
+                    <h4 id="totalRevenue">-</h4>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-2">
+                <div class="card stats-card">
+                    <h6>Pending</h6>
+                    <h4 id="pendingInvoices">-</h4>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-2">
+                <div class="card stats-card">
+                    <h6>Today</h6>
+                    <h4 id="todayTransactions">-</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <ul class="nav nav-tabs" id="mainTabs" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" id="customers-tab" data-bs-toggle="tab" data-bs-target="#customers">
+                    <i class="fas fa-users me-1"></i>Customers
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="reports-tab" data-bs-toggle="tab" data-bs-target="#reports">
+                    <i class="fas fa-chart-bar me-1"></i>Reports
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="bulk-load-tab" data-bs-toggle="tab" data-bs-target="#bulk-load">
+                    <i class="fas fa-upload me-1"></i>Bulk Load
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
+            <!-- Customers Tab -->
+            <div class="tab-pane fade show active" id="customers">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0"><i class="fas fa-users me-2"></i>Customer Management</h6>
+                        <button class="btn btn-primary-custom btn-sm" data-bs-toggle="modal" data-bs-target="#customerModal">
+                            <i class="fas fa-plus me-1"></i>Add
+                        </button>
+                    </div>
+                    <div class="card-body p-2">
+                        <!-- Search Controls -->
+                        <div class="row mb-2">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control form-control-sm" id="customerSearch" placeholder="Search customers...">
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select form-select-sm" id="statusFilter">
+                                    <option value="">All Status</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-outline-secondary btn-sm w-100" onclick="loadCustomers()">
+                                    <i class="fas fa-sync me-1"></i>Refresh
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Customer Table -->
+                        <div class="table-responsive">
+                            <table class="table table-hover table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>City</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="customersTableBody">
+                                    <tr>
+                                        <td colspan="6" class="text-center">
+                                            <div class="spinner-border spinner-border-sm" role="status"></div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div class="tab-pane fade" id="reports">
+                <!-- Customer Payments -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h6 class="mb-0"><i class="fas fa-dollar-sign me-2"></i>Payment Summary</h6>
+                    </div>
+                    <div class="card-body p-2">
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Customer</th>
+                                        <th>Email</th>
+                                        <th>Total Paid</th>
+                                        <th>Invoices</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="customerPaymentsBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Platform Transactions -->
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0"><i class="fas fa-credit-card me-2"></i>Transactions</h6>
+                        <select class="form-select form-select-sm w-auto" id="platformFilter">
+                            <option value="">All Platforms</option>
+                            <option value="Nequi">Nequi</option>
+                            <option value="Daviplata">Daviplata</option>
+                            <option value="PSE">PSE</option>
+                        </select>
+                    </div>
+                    <div class="card-body p-2">
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Reference</th>
+                                        <th>Platform</th>
+                                        <th>Customer</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactionsByPlatformBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bulk Load Tab -->
+            <div class="tab-pane fade" id="bulk-load">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="mb-0"><i class="fas fa-upload me-2"></i>CSV Bulk Load</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="upload-area mb-3">
+                                    <i class="fas fa-cloud-upload-alt fa-2x text-muted mb-2"></i>
+                                    <div class="mb-2">
+                                        <input type="file" class="form-control" id="csvFile" accept=".csv">
+                                    </div>
+                                    <small class="text-muted">Select CSV file with customer and transaction data</small>
+                                </div>
+                                
+                                <button type="button" class="btn btn-primary-custom" onclick="uploadCSV()">
+                                    <i class="fas fa-upload me-2"></i>Upload and Process
+                                </button>
+
+                                <div id="uploadProgress" class="mt-3" style="display: none;">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+                                    </div>
+                                    <small class="text-muted">Processing...</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">Required Columns</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <small class="text-muted">
+                                            customer_name, email, phone, address, city, registration_date,
+                                            invoice_number, total_amount, platform_name, transaction_reference, 
+                                            transaction_amount, transaction_date
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Modal -->
+    <div class="modal fade" id="customerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="customerModalTitle">Add Customer</h6>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="customerForm">
+                        <input type="hidden" id="customerId">
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <label class="form-label">Name *</label>
+                                <input type="text" class="form-control form-control-sm" id="customerName" required>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control form-control-sm" id="customerEmail">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <label class="form-label">Phone</label>
+                                <input type="text" class="form-control form-control-sm" id="customerPhone">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <label class="form-label">City</label>
+                                <input type="text" class="form-control form-control-sm" id="customerCity">
+                            </div>
+                            <div class="col-12 mb-2">
+                                <label class="form-label">Address</label>
+                                <input type="text" class="form-control form-control-sm" id="customerAddress">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <label class="form-label">Registration Date *</label>
+                                <input type="date" class="form-control form-control-sm" id="registrationDate" required>
+                            </div>
+                            <div class="col-md-6 mb-2" id="statusGroup" style="display: none;">
+                                <label class="form-label">Status</label>
+                                <select class="form-select form-select-sm" id="customerStatus">
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary-custom btn-sm" onclick="saveCustomer()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Global variables
+        let customers = [];
+        const API_BASE = '/api';
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCustomers();
+            loadStats();
+            loadReports();
+            
+            // Set default registration date to today
+            document.getElementById('registrationDate').value = new Date().toISOString().split('T')[0];
+
+            // Add event listeners
+            document.getElementById('customerSearch').addEventListener('input', filterCustomers);
+            document.getElementById('statusFilter').addEventListener('change', filterCustomers);
+            document.getElementById('platformFilter').addEventListener('change', loadTransactionsByPlatform);
+        });
+
+        // Utility functions
+        function showAlert(message, type = 'success') {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertHtml = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            alertContainer.innerHTML = alertHtml;
+            
+            setTimeout(() => {
+                const alert = alertContainer.querySelector('.alert');
+                if (alert) alert.remove();
+            }, 4000);
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString('es-CO');
+        }
+
+        // API functions
+        async function apiCall(endpoint, options = {}) {
+            try {
+                const response = await fetch(`${API_BASE}${endpoint}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...options.headers
+                    },
+                    ...options
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                return await response.json();
+            } catch (error) {
+                console.error('API call failed:', error);
+                throw error;
+            }
+        }
+
+        // Customer functions
+        async function loadCustomers() {
+            try {
+                const response = await apiCall('/customers');
+                customers = response.data;
+                renderCustomers(customers);
+            } catch (error) {
+                showAlert('Failed to load customers: ' + error.message, 'danger');
+            }
+        }
+
+        function renderCustomers(customersToRender) {
+            const tbody = document.getElementById('customersTableBody');
+            
+            if (customersToRender.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">No customers found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = customersToRender.map(customer => `
+                <tr>
+                    <td>${customer.customer_id}</td>
+                    <td>${customer.customer_name}</td>
+                    <td>${customer.email || 'N/A'}</td>
+                    <td>${customer.city || 'N/A'}</td>
+                    <td>
+                        <span class="status-badge status-${customer.status}">
+                            ${customer.status}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-outline-primary btn-sm me-1" onclick="editCustomer(${customer.customer_id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm" onclick="deleteCustomer(${customer.customer_id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterCustomers() {
+            const searchTerm = document.getElementById('customerSearch').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+
+            let filtered = customers.filter(customer => {
+                const matchesSearch = 
+                    customer.customer_name.toLowerCase().includes(searchTerm) ||
+                    (customer.email && customer.email.toLowerCase().includes(searchTerm));
+
+                const matchesStatus = !statusFilter || customer.status === statusFilter;
+
+                return matchesSearch && matchesStatus;
+            });
+
+            renderCustomers(filtered);
+        }
+
+        function openCustomerModal(customer = null) {
+            const modal = new bootstrap.Modal(document.getElementById('customerModal'));
+            const form = document.getElementById('customerForm');
+            
+            form.reset();
+            document.getElementById('customerId').value = '';
+            
+            if (customer) {
+                document.getElementById('customerModalTitle').textContent = 'Edit Customer';
+                document.getElementById('customerId').value = customer.customer_id;
+                document.getElementById('customerName').value = customer.customer_name;
+                document.getElementById('customerEmail').value = customer.email || '';
+                document.getElementById('customerPhone').value = customer.phone || '';
+                document.getElementById('customerCity').value = customer.city || '';
+                document.getElementById('customerAddress').value = customer.address || '';
+                document.getElementById('registrationDate').value = customer.registration_date;
+                document.getElementById('customerStatus').value = customer.status;
+                document.getElementById('statusGroup').style.display = 'block';
+            } else {
+                document.getElementById('customerModalTitle').textContent = 'Add Customer';
+                document.getElementById('registrationDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('statusGroup').style.display = 'none';
+            }
+            
+            modal.show();
+        }
+
+        async function editCustomer(customerId) {
+            const customer = customers.find(c => c.customer_id === customerId);
+            if (customer) {
+                openCustomerModal(customer);
+            }
+        }
+
+        async function saveCustomer() {
+            const customerId = document.getElementById('customerId').value;
+            const customerData = {
+                customer_name: document.getElementById('customerName').value,
+                email: document.getElementById('customerEmail').value,
+                phone: document.getElementById('customerPhone').value,
+                city: document.getElementById('customerCity').value,
+                address: document.getElementById('customerAddress').value,
+                registration_date: document.getElementById('registrationDate').value,
+                status: customerId ? document.getElementById('customerStatus').value : 'active'
+            };
+
+            if (!customerData.customer_name || !customerData.registration_date) {
+                showAlert('Please fill in all required fields', 'danger');
+                return;
+            }
+
+            try {
+                let response;
+                if (customerId) {
+                    response = await apiCall(`/customers/${customerId}`, {
+                        method: 'PUT',
+                        body: JSON.stringify(customerData)
+                    });
+                } else {
+                    response = await apiCall('/customers', {
+                        method: 'POST',
+                        body: JSON.stringify(customerData)
+                    });
+                }
+
+                if (response.success) {
+                    showAlert(customerId ? 'Customer updated' : 'Customer created');
+                    bootstrap.Modal.getInstance(document.getElementById('customerModal')).hide();
+                    loadCustomers();
+                    loadStats();
+                } else {
+                    throw new Error(response.error);
+                }
+            } catch (error) {
+                showAlert('Failed to save customer: ' + error.message, 'danger');
+            }
+        }
+
+        async function deleteCustomer(customerId) {
+            if (!confirm('Delete this customer?')) return;
+
+            try {
+                const response = await apiCall(`/customers/${customerId}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.success) {
+                    showAlert('Customer deleted');
+                    loadCustomers();
+                    loadStats();
+                } else {
+                    throw new Error(response.error);
+                }
+            } catch (error) {
+                showAlert('Failed to delete customer: ' + error.message, 'danger');
+            }
+        }
+
+        // Stats functions
+        async function loadStats() {
+            try {
+                const paymentsResponse = await apiCall('/reports/customer-payments');
+                const pendingResponse = await apiCall('/reports/pending-invoices');
+                const transactionsResponse = await apiCall('/reports/transactions-by-platform');
+
+                if (paymentsResponse.success) {
+                    const totalCustomers = paymentsResponse.data.length;
+                    const totalRevenue = paymentsResponse.data.reduce((sum, customer) => sum + parseFloat(customer.total_paid || 0), 0);
+                    
+                    document.getElementById('totalCustomers').textContent = totalCustomers;
+                    document.getElementById('totalRevenue').textContent = formatCurrency(totalRevenue);
+                }
+
+                if (pendingResponse.success) {
+                    document.getElementById('pendingInvoices').textContent = pendingResponse.data.length;
+                }
+
+                if (transactionsResponse.success) {
+                    const today = new Date().toISOString().split('T')[0];
+                    const todayTransactions
