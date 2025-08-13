@@ -762,26 +762,3 @@
                 showAlert('Failed to delete customer: ' + error.message, 'danger');
             }
         }
-
-        // Stats functions
-        async function loadStats() {
-            try {
-                const paymentsResponse = await apiCall('/reports/customer-payments');
-                const pendingResponse = await apiCall('/reports/pending-invoices');
-                const transactionsResponse = await apiCall('/reports/transactions-by-platform');
-
-                if (paymentsResponse.success) {
-                    const totalCustomers = paymentsResponse.data.length;
-                    const totalRevenue = paymentsResponse.data.reduce((sum, customer) => sum + parseFloat(customer.total_paid || 0), 0);
-                    
-                    document.getElementById('totalCustomers').textContent = totalCustomers;
-                    document.getElementById('totalRevenue').textContent = formatCurrency(totalRevenue);
-                }
-
-                if (pendingResponse.success) {
-                    document.getElementById('pendingInvoices').textContent = pendingResponse.data.length;
-                }
-
-                if (transactionsResponse.success) {
-                    const today = new Date().toISOString().split('T')[0];
-                    const todayTransactions

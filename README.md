@@ -40,88 +40,14 @@ m4bbdd_samuelroseroalvarez/
 └── README.md
 ```
 
-##  Database Normalization Process
-
-# TO DO
-- NORMALIZATION PROCESS
-- RELATIONAL MODEL
-- CRUD ACCORDING TO THE EXCERSICE
-- FIX JAVASCRIPT-FRONTEND(HTML), MAKE IT ACCORDING TO THE EXCERCISE SO I CAN UPLOAD THE CSV FILES
-- EL FRONT SOLO DEBE DE SER ALGO MUY SIMPLE QUE PERMITA CARGAR LOS ARCHIVOS CSV DE CLIENTES Y DEJAR HACER CRUD (MEDIANTE ENDPOINTS)
-- STEP BY STEP TO ADD THE POSTMAN ADVANCED CONSULTS STEP BY STEP
-- FIX THE DDL, SQL, FILE
-- FINISH THE README FILE 
-- LA CONFIGURACION DE LA BASE DE DATOS ESTA BIEN 
-- NO AÑADIR EMOJIS
-- CARGA MASIVA DE DATOS CSV invoices y transactions por medio de un script, por eso organizar el server.js
-- CARGA MASIVA DE DATOS PARA CUSTOMERS MEDIANTE ENDPOINTS EN EL FRONT END, POR ESO ORGANIZAR EL index.html
-- dentro del readme incluir como hacer lo de las consultas avanzadas, que explique la carga masiva 
-- PILAS CON EL CRUD QUE SOLO SEA CON LA INFORMACION QUE HAY EN LOS ARCHIVOS CSV por eso organizar para que sea coherente con lo que se pide
-
-
-### In process
-
 ### Tables Structure
 - **customers**: Customer information
 - **invoices**: Invoice data with payment tracking
 - **transactions**: Individual payment transactions
 
-### Relational Model in process
+### Relational Model 
 
-Screenshot
-
-## 📱 Features in proccess
-
-### Customer Management (CRUD)
-- ✅ Create new customers with validation
-- ✅ Read customer information with filtering
-- ✅ Update customer details
-- ✅ Delete customers (with cascade to related records)
-
-### Advanced Reporting
-1. **Customer Payment Summary**: Total payments by customer
-2. **Pending Invoices Report**: Outstanding invoices with customer details
-3. **Platform Transaction Analysis**: Transactions filtered by payment platform
-
-### Bulk Data Loading
-- Upload CSV files with customer, invoice, and transaction data
-- Automatic data validation and processing
-- Error handling and reporting
-
-## 🔗 API Endpoints
-
-### Customer CRUD
-```http
-GET    /api/customers           # Get all customers
-GET    /api/customers/:id       # Get customer by ID
-POST   /api/customers           # Create new customer
-PUT    /api/customers/:id       # Update customer
-DELETE /api/customers/:id       # Delete customer
-```
-
-### Advanced Queries
-```http
-GET /api/reports/customer-payments     # Total paid by each customer
-GET /api/reports/pending-invoices      # Pending invoices with details
-GET /api/reports/transactions-by-platform?platform=Nequi  # Platform transactions
-```
-
-### Bulk Operations
-```http
-POST /api/bulk-load               # Upload CSV file for bulk processing
-```
-
-## CSV Bulk Load Instructions
-
-### CSV Format Requirements
-Your CSV file must include these columns:
-```
-customer_name, email, phone, address, city, registration_date,
-invoice_number, total_amount, paid_amount, invoice_status,
-issue_date, due_date, description, platform_name,
-transaction_reference, transaction_amount, transaction_date,
-transaction_status, notes
-```
+## Normalization process explanation
 
 ## Advanced Query Explanations
 

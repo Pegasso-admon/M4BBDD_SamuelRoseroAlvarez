@@ -72,7 +72,7 @@ app.get('/api/customers/:id', async (req, res) => {
 app.post('/api/customers', async (req, res) => {
     try {
         const { customer_name, email, phone, address, city, registration_date } = req.body;
-        
+
         // Validation
         if (!customer_name || !registration_date) {
             return res.status(400).json({ success: false, error: 'Name and registration date are required' });
@@ -83,8 +83,8 @@ app.post('/api/customers', async (req, res) => {
             [customer_name, email, phone, address, city, registration_date]
         );
 
-        res.status(201).json({ 
-            success: true, 
+        res.status(201).json({
+            success: true,
             data: { customer_id: result.insertId, customer_name, email, phone, address, city, registration_date }
         });
     } catch (error) {
@@ -125,7 +125,7 @@ app.put('/api/customers/:id', async (req, res) => {
 app.delete('/api/customers/:id', async (req, res) => {
     try {
         const [result] = await pool.execute('DELETE FROM customers WHERE customer_id = ?', [req.params.id]);
-        
+
         if (result.affectedRows === 0) {
             return res.status(404).json({ success: false, error: 'Customer not found' });
         }
@@ -153,7 +153,7 @@ app.get('/api/reports/customer-payments', async (req, res) => {
             GROUP BY c.customer_id, c.customer_name, c.email
             ORDER BY total_paid DESC
         `;
-        
+
         const [rows] = await pool.execute(query);
         res.json({ success: true, data: rows });
     } catch (error) {
@@ -189,7 +189,7 @@ app.get('/api/reports/pending-invoices', async (req, res) => {
                     i.due_date, c.customer_name, c.email, c.phone
             ORDER BY i.due_date ASC
         `;
-        
+
         const [rows] = await pool.execute(query);
         res.json({ success: true, data: rows });
     } catch (error) {
@@ -219,15 +219,15 @@ app.get('/api/reports/transactions-by-platform', async (req, res) => {
             INNER JOIN invoices i ON t.invoice_id = i.invoice_id
             INNER JOIN customers c ON i.customer_id = c.customer_id
         `;
-        
+
         const params = [];
         if (platform) {
             query += ' WHERE LOWER(p.platform_name) = LOWER(?)';
             params.push(platform);
         }
-        
+
         query += ' ORDER BY t.transaction_date DESC';
-        
+
         const [rows] = await pool.execute(query, params);
         res.json({ success: true, data: rows });
     } catch (error) {
@@ -238,14 +238,14 @@ app.get('/api/reports/transactions-by-platform', async (req, res) => {
 // CSV BULK LOAD ENDPOINT
 app.post('/api/bulk-load', upload.single('csvFile'), async (req, res) => {
     const connection = await pool.getConnection();
-    
+
     try {
         if (!req.file) {
             return res.status(400).json({ success: false, error: 'No CSV file uploaded' });
         }
 
         await connection.beginTransaction();
-        
+
         const results = [];
         const errors = [];
         let processedCount = 0;
@@ -338,12 +338,12 @@ app.post('/api/bulk-load', upload.single('csvFile'), async (req, res) => {
 
     } catch (error) {
         await connection.rollback();
-        
+
         // Clean up uploaded file if it exists
         if (req.file && fs.existsSync(req.file.path)) {
             fs.unlinkSync(req.file.path);
         }
-        
+
         res.status(500).json({ success: false, error: error.message });
     } finally {
         connection.release();
