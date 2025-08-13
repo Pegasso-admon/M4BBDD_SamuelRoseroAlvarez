@@ -24,17 +24,19 @@ CREATE TABLE invoices (
    FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE
 );
 
-Create transactions table CREATE TABLE transactions (
+-- Create transactions table
+CREATE TABLE transactions (
    transaction_id INT PRIMARY KEY AUTO_INCREMENT,
    invoice_id INT NOT NULL,
    platform_name VARCHAR(100) NOT NULL,
    amount INT NOT NULL,
    transaction_datetime DATETIME NOT NULL,
-   status ENUM('pending', 'completed', 'failed', 'cancelled') NOT NULL DEFAULT 'pending',
+   status ENUM('pending', 'completed', 'failed') NOT NULL DEFAULT 'pending',
    FOREIGN KEY (invoice_id) REFERENCES invoices(invoice_id) ON DELETE CASCADE
 );
 
-Create indexes for better performance CREATE INDEX idx_customers_email ON customers(email);
+-- Create indexes for better performance
+CREATE INDEX idx_customers_email ON customers(email);
 
 CREATE INDEX idx_customers_status ON customers(status);
 
