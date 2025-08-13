@@ -46,11 +46,17 @@ m4bbdd_samuelroseroalvarez/
 - NORMALIZATION PROCESS
 - RELATIONAL MODEL
 - CRUD ACCORDING TO THE EXCERSICE
-- FIX JAVASCRIPT-FRONTEND(HTML), MAKE IT ACCORDING TO THE EXCERCISE
-- STEP BY STEP TO ADD THE POSTMAN
-- ADVANCED CONSULTS STEP BY STEP
+- FIX JAVASCRIPT-FRONTEND(HTML), MAKE IT ACCORDING TO THE EXCERCISE SO I CAN UPLOAD THE CSV FILES
+- EL FRONT SOLO DEBE DE SER ALGO MUY SIMPLE QUE PERMITA CARGAR LOS ARCHIVOS CSV DE CLIENTES Y DEJAR HACER CRUD (MEDIANTE ENDPOINTS)
+- STEP BY STEP TO ADD THE POSTMAN ADVANCED CONSULTS STEP BY STEP
 - FIX THE DDL, SQL, FILE
 - FINISH THE README FILE 
+- LA CONFIGURACION DE LA BASE DE DATOS ESTA BIEN 
+- NO AÑADIR EMOJIS
+- CARGA MASIVA DE DATOS CSV invoices y transactions por medio de un script, por eso organizar el server.js
+- CARGA MASIVA DE DATOS PARA CUSTOMERS MEDIANTE ENDPOINTS EN EL FRONT END, POR ESO ORGANIZAR EL index.html
+- dentro del readme incluir como hacer lo de las consultas avanzadas, que explique la carga masiva 
+- PILAS CON EL CRUD QUE SOLO SEA CON LA INFORMACION QUE HAY EN LOS ARCHIVOS CSV por eso organizar para que sea coherente con lo que se pide
 
 
 ### In process
@@ -105,7 +111,7 @@ GET /api/reports/transactions-by-platform?platform=Nequi  # Platform transaction
 POST /api/bulk-load               # Upload CSV file for bulk processing
 ```
 
-## 📋 CSV Bulk Load Instructions
+## CSV Bulk Load Instructions
 
 ### CSV Format Requirements
 Your CSV file must include these columns:
@@ -117,7 +123,7 @@ transaction_reference, transaction_amount, transaction_date,
 transaction_status, notes
 ```
 
-## 📊 Advanced Query Explanations
+## Advanced Query Explanations
 
 ### 1. Total Paid by Each Customer
 This query aggregates all completed transactions per customer, providing insights into customer value and payment behavior.
@@ -129,7 +135,7 @@ Identifies overdue or partially paid invoices with customer contact information 
 Analyzes payment method preferences and platform performance, supporting business intelligence decisions.
 
 
-## 👨‍💻 Developer Information
+## Developer Information
 
 - **Name**: Samuel Rosero Alvarez
 - **Clan**: Berners Lee

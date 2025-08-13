@@ -36,10 +36,10 @@ const pool = mysql.createPool(dbConfig);
 async function testConnection() {
     try {
         const connection = await pool.getConnection();
-        console.log('✅ Database connected successfully');
+        console.log('Database connected successfully');
         connection.release();
     } catch (error) {
-        console.error('❌ Database connection failed:', error.message);
+        console.error('Database connection failed:', error.message);
     }
 }
 
@@ -373,7 +373,7 @@ app.use((err, req, res, next) => {
 
 // Start server
 app.listen(PORT, async () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(` Server running on http://localhost:${PORT}`);
     await testConnection();
 });
 
