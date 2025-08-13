@@ -46,8 +46,13 @@ m4bbdd_samuelroseroalvarez/
 - **transactions**: Individual payment transactions
 
 ### Relational Model 
+<img width="702" height="504" alt="image" src="https://github.com/user-attachments/assets/2919020c-04f5-4abe-8373-0d015c1c1ce8" />
 
 ## Normalization process explanation
+
+As I can see in the xlsx three main entities can be seen to be normalized.
+
+No duplicated data was encounter in the data.xlsx file, but customers, transactions and invoices were entitities that can be normalized.
 
 ## Advanced Query Explanations
 
